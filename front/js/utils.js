@@ -1,19 +1,13 @@
 //requètes GET et récupération sous format JSON des résultats
-fetch("http://localhost:3000/api/products").then(function (reponse) {
-  if (reponse.ok) {
-    return reponse.json();
-  }
-})
+fetchData("http://localhost:3000/api/products")
   .then(
-    function (getAllProducts) {
-      // getAllProducts = parametreUrl
-      let numberOfProducts = getAllProducts.length;
-      console.log("toutes les valeurs de la requète GET", getAllProducts);
+    function (resultatFetchData) {
+      let numberOfProducts = resultatFetchData.length;
+      console.log("toutes les valeurs de la requète GET", resultatFetchData);
       for (let i = 0; i < numberOfProducts; i++) {
-        let allProducts = getAllProducts[i];
-        let colorProducts = allProducts["colors"];
+        console.log("requète GET", resultatFetchData[i]);
+        let allProducts = resultatFetchData[i];
         let nameProducts = allProducts["name"];
-        let priceProducts = allProducts["price"];
         let descriptionProducts = allProducts["description"];
         let imageUrlProducts = allProducts["imageUrl"];
         let idProducts = allProducts["_id"];
@@ -29,6 +23,6 @@ fetch("http://localhost:3000/api/products").then(function (reponse) {
 
     })
   .catch(function (err) {
-    // Une erreur est survenue
+    confirm("Veuillez réessayer ultérieurement la liste des article n'est pas disponible");
   });
 
