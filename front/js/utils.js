@@ -23,6 +23,15 @@ fetchData("http://localhost:3000/api/products")
 
     })
   .catch(function (err) {
-    confirm("Veuillez réessayer ultérieurement la liste des article n'est pas disponible");
+
   });
+function verifQuantity(checkQuantityProducts) {
+
+  if (checkQuantityProducts === 0 || checkQuantityProducts >= 100) {
+    return true;
+  }
+  else {
+    return false;
+  }
+}
 

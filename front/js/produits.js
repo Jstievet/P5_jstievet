@@ -6,14 +6,10 @@ const urlApi = "http://localhost:3000/api/products/" + idProductsSelection;
 fetchData(urlApi)
     .then(
         function recuperationId(dataResult) {
-            //vérification si l'id conteint des caractère spéciaux
-            // const specialCaractere = /^[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]*$/;
-            // if (idProductsSelection.search(specialCaractere) = ! -1) {
-            //     confirm("l'identifiant du produit n'existe pas");
-            // }
-            //si idProductsSelection est vide c'est si pas d'id , ou si l'id contient plus ou moins de 32 caractère alors le produit n'existe pas
+            //si idProductsSelection est vide et/ou si pas d'id , ou si l'id contient plus ou moins de 32 caractère alors le produit n'existe pas
             if (idProductsSelection === "" || idProductsSelection.length != 32) {
-                console.log('Le produit n existe pas');
+                confirm("Un soucis est survenue le produit n'as pas été trouve retour à la page produit");
+                window.location.href = "http://127.0.0.1:5500/front/html/index.html";
             }
             //si tout est bon on affiche le produit
             else {
@@ -31,7 +27,6 @@ fetchData(urlApi)
                 urlImgProducts.setAttribute("src", imageUrlProducts);
                 urlImgProducts.setAttribute("alt", altProducts);
                 emplacementImgProducts.appendChild(urlImgProducts);
-                console.log('urlImgProducts', urlImgProducts);
                 let emplacementDescriptionProducts = document.getElementById('description');
                 emplacementDescriptionProducts.innerText = descriptionProducts;
                 let emplacementPriceProducts = document.getElementById('price');
@@ -52,7 +47,8 @@ fetchData(urlApi)
 
     )
     .catch(function (err) {
-        // Une erreur est survenue
+        // confirm("Un soucis est survenue retour à la page produit");
+        // window.location.href = "http://127.0.0.1:5500/front/html/index.html";
     });
 
 const addToCart = document.getElementById('addToCart');
@@ -60,37 +56,63 @@ if (addToCart) {
 
     addToCart.addEventListener('click', function () {
 
-        let checkColorProducts = document.getElementById('colors').value;
-        let checkQuantityProducts = document.getElementById('quantity').value;
+        let colorProduct = document.getElementById('colors').value;
+        let quantityProduct = parseInt(document.getElementById('quantity').value);
+
         let cart = JSON.parse(localStorage.getItem('products'))
-        if (cart?.find(item => item.id === idProductsSelection && item.color === checkColorProducts)) {
-            cart = cart.map(item => {
-                if (item.id === idProductsSelection && item.color === checkColorProducts) {
-                    item.quantity += parseInt(checkQuantityProducts);
-                }
-                return item;
-            })
+        if (verifQuantity(quantityProduct, idProductsSelection) === true) {
+            console.log('erreur sur la Quantité', quantityProduct);
+            const errQuantity = "La Quantité dois être comprise entre 0 et 100";
+            let emplacementError = document.getElementById("firstNameErrorMsg");
+            emplacementError.innerText = errQuantity;
         } else {
-            const productsSelectionne = {
-                id: idProductsSelection,
-                color: checkColorProducts,
-                quantity: parseInt(checkQuantityProducts)
+            if (colorProduct.length === 0) {
+                console.log('erreur sur la couleur', colorProduct.length);
+                const errColor = "Aucune Couleur n'as été choisie Veuillez selectionne une couleur";
+                let emplacementError = document.getElementById("firstNameErrorMsg");
+                console.log('firstNameErrorMsg', emplacementError);
+                emplacementError.innerText = errColor;
             }
-            if (cart) {
-                cart.push(productsSelectionne);
-            } else {
-                cart = [productsSelectionne];
+            else {
+                console.log('la couleur est présente',)
+
+                if (cart?.find(item => item.id === idProductsSelection && item.color === colorProduct && quantityProduct != 0)) {
+                    cart = cart.map(item => {
+                        if (item.id === idProductsSelection && item.color === colorProduct) {
+                            if ((item.quantity + quantityProduct) <= 100) {
+                                item.quantity += parseInt(quantityProduct);
+                            } else {
+                                const errMaxProduct = "pas plus de 100 articles";
+                                let emplacementError = document.getElementById("firstNameErrorMsg");
+                                console.log('firstNameErrorMsg', emplacementError);
+                                item.quantity = 100;
+                            }
+                        }
+                        return item;
+                    })
+                    localStorage.setItem('products', JSON.stringify(cart));
+                } else {
+                    const productsSelectionne = {
+                        id: idProductsSelection,
+                        color: colorProduct,
+                        quantity: parseInt(quantityProduct)
+                    }
+                    if (cart) {
+                        cart.push(productsSelectionne);
+                    } else {
+                        cart = [productsSelectionne];
+                    }
+                    localStorage.setItem('products', JSON.stringify(cart));
+                    console.log('cart', cart);
+                }
             }
+
         }
 
-        localStorage.setItem('products', JSON.stringify(cart));
-        confirm("le produit est enregistrer");
-        console.log('cart', cart);
     });
 } else {
     console.log('erreur', 'bouton non détecter');
 }
-
 
 
 
