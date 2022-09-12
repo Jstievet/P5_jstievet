@@ -75,7 +75,7 @@ if (addToCart) {
             }
             else {
                 console.log('la couleur est présente',)
-
+                console.log('checkitemexistant', cart?.find(item => item.id === idProductsSelection && item.color === colorProduct && quantityProduct != 0));
                 if (cart?.find(item => item.id === idProductsSelection && item.color === colorProduct && quantityProduct != 0)) {
                     cart = cart.map(item => {
                         if (item.id === idProductsSelection && item.color === colorProduct) {
