@@ -3,9 +3,7 @@ fetchData("http://localhost:3000/api/products")
   .then(
     function (resultatFetchData) {
       let numberOfProducts = resultatFetchData.length;
-      console.log("toutes les valeurs de la requète GET", resultatFetchData);
       for (let i = 0; i < numberOfProducts; i++) {
-        console.log("requète GET", resultatFetchData[i]);
         let allProducts = resultatFetchData[i];
         let nameProducts = allProducts["name"];
         let descriptionProducts = allProducts["description"];

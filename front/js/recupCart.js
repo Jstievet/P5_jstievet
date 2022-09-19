@@ -136,9 +136,12 @@ buttonSubmit.addEventListener('click', function (e) {
     let city = document.getElementById('city').value;
     let mail = document.getElementById('email').value;
     const localProducts = JSON.parse(localStorage.getItem('products'));
-    localProducts.map(product => {
-        idProducts.push(product.id);
-    })
+    let idProductForOrder = [];
+
+    // Push Product ID in idProductForOrder
+    localProducts.forEach(product => {
+        idProductForOrder.push(product.id);
+    });
     console.log('idProducts', idProducts);
     let bodyData = {
         contact: {
@@ -146,49 +149,40 @@ buttonSubmit.addEventListener('click', function (e) {
             lastName: lastName,
             address: address,
             city: city,
-            mail: mail
+            email: mail
         },
-        products: idProducts
+        products: idProductForOrder
 
     };
-    let emplacementIdCommand = document.getElementById('orderId');
-    console.log('body', JSON.stringify(bodyData));
-    const dateSend = JSON.stringify(bodyData);
     const optionsPost = {
         method: 'POST',
         headers: {
             'Accept': 'application/json',
             'Content-Type': 'application/json'
         },
-        body: dateSend
+        body: JSON.stringify(bodyData)
     }
     //requete POST pour envoyer l'objet contact
     console.log('optionPost', optionsPost);
     fetch("http://localhost:3000/api/products/order", optionsPost)
         .then((response) => {
             console.log('response', response);
-        }
+            return response.json();
+        })
+        .then((data) => {
+            console.log('data', data);
+            // function pageConfirmation(data) {
+            let orderId = data.orderId;
+            let infosContact = data.contact;
+            let infosProducts = data.idProducts;
+            const idPageConfirmation = "http://127.0.0.1:5500/front/html/confirmation.html?id=" + orderId;;
+            console.log('idPageConfirmation', idPageConfirmation);
+            window.location.href = idPageConfirmation;
 
-            // function pageConfirmation(responseCommand) {
-            //     if (responseCommand.ok) {
-            //         let orderId = responseCommand.orderId;
-            //         let infosContact = responseCommand.contact;
-            //         let infosProducts = responseCommand.idProducts;
-            //         // const idPageConfirmation = "http://localhost:3000/api/products/" + orderId;
-            //         // window.location.href = idPageConfirmation;
-            //         // emplacementIdCommand.innerText(orderId);
-            //     } else {
-            //         //erreur dans la promise fournis
-            //     }
-            // }
-        )
+        })
         .catch(function (err) {
             console.log('err', err);
         });
 });
-
-
-
-
 
 

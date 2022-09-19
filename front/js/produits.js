@@ -8,7 +8,8 @@ fetchData(urlApi)
         function recuperationId(dataResult) {
             //si idProductsSelection est vide et/ou si pas d'id , ou si l'id contient plus ou moins de 32 caractère alors le produit n'existe pas
             if (idProductsSelection === "" || idProductsSelection.length != 32) {
-                confirm("Un soucis est survenue le produit n'as pas été trouve retour à la page produit");
+                const erreur = 'E001';
+                error(erreur);
                 window.location.href = "http://127.0.0.1:5500/front/html/index.html";
             }
             //si tout est bon on affiche le produit
@@ -47,8 +48,8 @@ fetchData(urlApi)
 
     )
     .catch(function (err) {
-        // confirm("Un soucis est survenue retour à la page produit");
-        // window.location.href = "http://127.0.0.1:5500/front/html/index.html";
+        const erreur = 'E006';
+        error(erreur);
     });
 
 const addToCart = document.getElementById('addToCart');
@@ -61,17 +62,12 @@ if (addToCart) {
 
         let cart = JSON.parse(localStorage.getItem('products'))
         if (verifQuantity(quantityProduct, idProductsSelection) === true) {
-            console.log('erreur sur la Quantité', quantityProduct);
-            const errQuantity = "La Quantité dois être comprise entre 0 et 100";
-            let emplacementError = document.getElementById("firstNameErrorMsg");
-            emplacementError.innerText = errQuantity;
+            const erreur = 'E002';
+            error(erreur);
         } else {
             if (colorProduct.length === 0) {
-                console.log('erreur sur la couleur', colorProduct.length);
-                const errColor = "Aucune Couleur n'as été choisie Veuillez selectionne une couleur";
-                let emplacementError = document.getElementById("firstNameErrorMsg");
-                console.log('firstNameErrorMsg', emplacementError);
-                emplacementError.innerText = errColor;
+                const erreur = 'E003';
+                error(erreur);
             }
             else {
                 console.log('la couleur est présente',)
@@ -82,10 +78,8 @@ if (addToCart) {
                             if ((item.quantity + quantityProduct) <= 100) {
                                 item.quantity += parseInt(quantityProduct);
                             } else {
-                                const errMaxProduct = "pas plus de 100 articles";
-                                let emplacementError = document.getElementById("firstNameErrorMsg");
-                                console.log('firstNameErrorMsg', emplacementError);
-                                item.quantity = 100;
+                                const erreur = 'E004';
+                                error(erreur);
                             }
                         }
                         return item;
@@ -111,7 +105,9 @@ if (addToCart) {
 
     });
 } else {
-    console.log('erreur', 'bouton non détecter');
+    const erreur = 'E005';
+    error(erreur);
+
 }
 
 
