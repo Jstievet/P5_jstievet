@@ -174,8 +174,14 @@ main {
 /*******/
 #firstNameErrorMsg {
   color: red;
+  text-align: center;
 }
-
+/*******/
+/*Message Validation*/
+/*******/
+#MessageValidation {
+  text-align: center;
+}
 /********/
 /*Footer*/
 /********/

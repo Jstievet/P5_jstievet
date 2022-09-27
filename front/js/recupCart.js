@@ -138,51 +138,72 @@ buttonSubmit.addEventListener('click', function (e) {
     const localProducts = JSON.parse(localStorage.getItem('products'));
     let idProductForOrder = [];
 
-    // Push Product ID in idProductForOrder
-    localProducts.forEach(product => {
-        idProductForOrder.push(product.id);
-    });
-    console.log('idProducts', idProducts);
-    let bodyData = {
-        contact: {
-            firstName: firstName,
-            lastName: lastName,
-            address: address,
-            city: city,
-            email: mail
-        },
-        products: idProductForOrder
-
-    };
-    const optionsPost = {
-        method: 'POST',
-        headers: {
-            'Accept': 'application/json',
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(bodyData)
-    }
-    //requete POST pour envoyer l'objet contact
-    console.log('optionPost', optionsPost);
-    fetch("http://localhost:3000/api/products/order", optionsPost)
-        .then((response) => {
-            console.log('response', response);
-            return response.json();
-        })
-        .then((data) => {
-            console.log('data', data);
-            // function pageConfirmation(data) {
-            let orderId = data.orderId;
-            let infosContact = data.contact;
-            let infosProducts = data.idProducts;
-            const idPageConfirmation = "http://127.0.0.1:5500/front/html/confirmation.html?id=" + orderId;;
-            console.log('idPageConfirmation', idPageConfirmation);
-            window.location.href = idPageConfirmation;
-
-        })
-        .catch(function (err) {
-            console.log('err', err);
+    const regexVerifNumber = new RegExp('[0-9]');
+    const regexVerifSpecial = new RegExp(/\W|_/g)
+    let verifName = firstName.search(regexVerifNumber)
+    let verifLastName = lastName.search(regexVerifNumber);
+    let verifCity = city.search(regexVerifNumber);
+    let verifNameSpecial = firstName.search(regexVerifSpecial)
+    let verifLastNameSpecial = lastName.search(regexVerifSpecial)
+    let verifCitySpecial = city.search(regexVerifSpecial)
+    console.log('verifNameSpecial', verifNameSpecial);
+    if (verifName != -1 || verifNameSpecial != -1) {
+        let err = 'E008';
+        error(err);
+    } else if (verifLastName != -1 || verifLastNameSpecial != -1) {
+        let err = 'E009';
+        error(err);
+    } else if (verifCity != -1 || verifCitySpecial != -1) {
+        let err = 'E010';
+        error(err);
+    } else {
+        // Push Product ID in idProductForOrder
+        localProducts.forEach(product => {
+            idProductForOrder.push(product.id);
         });
+        let bodyData = {
+            contact: {
+                firstName: firstName,
+                lastName: lastName,
+                address: address,
+                city: city,
+                email: mail
+            },
+            products: idProductForOrder
+
+        };
+        const optionsPost = {
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(bodyData)
+        }
+        //requete POST pour envoyer l'objet contact
+        fetch("http://localhost:3000/api/products/order", optionsPost)
+            .then((response) => {
+                console.log('response', response);
+                return response.json();
+            })
+            .then((data) => {
+                console.log('data', data);
+                // function pageConfirmation(data) {
+                let orderId = data.orderId;
+                let infosContact = data.contact;
+                let infosProducts = data.idProducts;
+                const idPageConfirmation = "http://127.0.0.1:5500/front/html/confirmation.html?id=" + orderId;;
+                console.log('idPageConfirmation', idPageConfirmation);
+                window.location.href = idPageConfirmation;
+
+            })
+            .catch(function (err) {
+                console.log('err', err);
+            });
+    }
 });
+
+
+
 
 

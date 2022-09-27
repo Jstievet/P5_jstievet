@@ -6,7 +6,8 @@ const idCommandFinal = urlParams.get('id');
 //on affiche dans le html le numéro de commande
 
 if (idCommandFinal === '') {
-    console.log('erreur sur la presence du numero de commande');
+    err === 'E007';
+    error(err);
 } else {
 
 

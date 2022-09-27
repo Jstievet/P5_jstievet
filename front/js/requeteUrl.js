@@ -11,7 +11,8 @@ async function fetchData(urlApi) {
 
     }
     catch (err) {
-        console.log(err.message);
+        const erreur = 'E006';
+        error(erreur);
     }
 
 }

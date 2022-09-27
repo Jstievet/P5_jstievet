@@ -10,7 +10,6 @@ fetchData(urlApi)
             if (idProductsSelection === "" || idProductsSelection.length != 32) {
                 const erreur = 'E001';
                 error(erreur);
-                window.location.href = "http://127.0.0.1:5500/front/html/index.html";
             }
             //si tout est bon on affiche le produit
             else {
@@ -84,6 +83,9 @@ if (addToCart) {
                         }
                         return item;
                     })
+                    let messageValidation = 'Votre article à été ajouté dans votre panier';
+                    let emplacementMessageProductPanier = document.getElementById("MessageValidation");
+                    emplacementMessageProductPanier.innerText = messageValidation;
                     localStorage.setItem('products', JSON.stringify(cart));
                 } else {
                     const productsSelectionne = {
