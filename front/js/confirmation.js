@@ -9,9 +9,6 @@ if (idCommandFinal === '') {
     err === 'E007';
     error(err);
 } else {
-
-
-
     if (idCommandFinal) {
         const emplacementIdCommand = document.getElementById('orderId');
         emplacementIdCommand.innerText = idCommandFinal;

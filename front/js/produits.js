@@ -40,11 +40,8 @@ fetchData(urlApi)
                     emplacementColorProducts.appendChild(optionColors);
                     optionColors.innerHTML = colorProducts[i];
                 }
-
-
             }
         }
-
     )
     .catch(function (err) {
         const erreur = 'E006';
@@ -52,65 +49,55 @@ fetchData(urlApi)
     });
 
 const addToCart = document.getElementById('addToCart');
-if (addToCart) {
+addToCart.addEventListener('click', function () {
 
-    addToCart.addEventListener('click', function () {
+    let colorProduct = document.getElementById('colors').value;
+    let quantityProduct = parseInt(document.getElementById('quantity').value);
+    let emplacementError = document.getElementById('ErrorMsg');
+    let cart = JSON.parse(localStorage.getItem('products'))
 
-        let colorProduct = document.getElementById('colors').value;
-        let quantityProduct = parseInt(document.getElementById('quantity').value);
+    //vérification changement après premiere achats
 
-        let cart = JSON.parse(localStorage.getItem('products'))
+    if (colorProduct.length === 0) {
+        const erreur = 'E003';
+        error(erreur);
+    } else {
         if (verifQuantity(quantityProduct, idProductsSelection) === true) {
             const erreur = 'E002';
             error(erreur);
-        } else {
-            if (colorProduct.length === 0) {
-                const erreur = 'E003';
-                error(erreur);
-            }
-            else {
-                console.log('la couleur est présente',)
-                console.log('checkitemexistant', cart?.find(item => item.id === idProductsSelection && item.color === colorProduct && quantityProduct != 0));
-                if (cart?.find(item => item.id === idProductsSelection && item.color === colorProduct && quantityProduct != 0)) {
-                    cart = cart.map(item => {
-                        if (item.id === idProductsSelection && item.color === colorProduct) {
-                            if ((item.quantity + quantityProduct) <= 100) {
-                                item.quantity += parseInt(quantityProduct);
-                            } else {
-                                const erreur = 'E004';
-                                error(erreur);
-                            }
-                        }
-                        return item;
-                    })
-                    let messageValidation = 'Votre article à été ajouté dans votre panier';
-                    let emplacementMessageProductPanier = document.getElementById("MessageValidation");
-                    emplacementMessageProductPanier.innerText = messageValidation;
-                    localStorage.setItem('products', JSON.stringify(cart));
-                } else {
-                    const productsSelectionne = {
-                        id: idProductsSelection,
-                        color: colorProduct,
-                        quantity: parseInt(quantityProduct)
-                    }
-                    if (cart) {
-                        cart.push(productsSelectionne);
-                    } else {
-                        cart = [productsSelectionne];
-                    }
-                    localStorage.setItem('products', JSON.stringify(cart));
-                    console.log('cart', cart);
-                }
-            }
-
         }
+        else {
+            const nameProduct = document.getElementById('title');
+            let nameProductValue = nameProduct.textContent;
+            emplacementError.innerText = "";
+            let messageValidation = `Votre article ${nameProductValue} de couleur ${colorProduct} à été ajouté dans votre panier`;
+            let emplacementMessageProductPanier = document.getElementById("MessageValidation");
+            emplacementMessageProductPanier.innerText = messageValidation;
+            if (cart?.find(item => item.id === idProductsSelection && item.color === colorProduct && quantityProduct != 0)) {
+                cart = cart.map(item => {
+                    if (item.id === idProductsSelection && item.color === colorProduct) {
+                        item.quantity += parseInt(quantityProduct);
+                    }
+                    return item;
+                })
+                localStorage.setItem('products', JSON.stringify(cart));
+            } else {
+                const productsSelectionne = {
+                    id: idProductsSelection,
+                    color: colorProduct,
+                    quantity: parseInt(quantityProduct)
+                }
+                if (cart) {
+                    cart.push(productsSelectionne);
+                } else {
+                    cart = [productsSelectionne];
+                }
+                localStorage.setItem('products', JSON.stringify(cart));
+            }
+        }
+    }
+});
 
-    });
-} else {
-    const erreur = 'E005';
-    error(erreur);
-
-}
 
 
 

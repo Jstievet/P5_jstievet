@@ -172,10 +172,19 @@ main {
 /*******/
 /*Error*/
 /*******/
-#firstNameErrorMsg {
+#ErrorMsg {
   color: red;
   text-align: center;
+  padding: 5px;
+  font-weight: bolder;
 }
+.error {
+  color: red;
+  text-align: center;
+  padding: 5px;
+  font-weight: bolder;
+}
+
 /*******/
 /*Message Validation*/
 /*******/
