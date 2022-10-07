@@ -178,7 +178,7 @@ main {
   padding: 5px;
   font-weight: bolder;
 }
-.hidden {
+.cart__item__hidden {
   display: none;
 }
 .error {

@@ -71,6 +71,11 @@ function error(err) {
             let emplacementEmptyArticle = document.getElementById("ErrorMsg");
             emplacementEmptyArticle.innerText = errorEmptyArticle;
             break;
+        case 'E017':
+            const errorEmptyMail = "L'adresse mail n'as pas de @";
+            let emplacementMailArticle = document.getElementById("emailErrorMsg");
+            emplacementMailArticle.innerText = errorEmptyMail;
+            break;
         default:
 
 
