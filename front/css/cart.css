@@ -22,6 +22,9 @@ h2 {
 	padding-top: 35px;
 	margin-bottom: 30px;
 }
+.cart__item__hidden {
+	display: none;
+}
 .cart__item__img {
 	width: 25%;
 }
