@@ -86,7 +86,7 @@ if (storageArticles === null || storageArticles.length === 0) {
 
                                     if (color === verifIdColor.color) {
                                         let emplacementElementDelete = document.getElementsByClassName('cart_item');
-                                        emplacementElementDelete.setAttribute('hidden', true);
+                                        emplacementElementDelete.classList.add("hidden");
                                         cartProducts.splice(i, 1);
                                         localStorage.removeItem('products')
                                         localStorage.setItem('products', JSON.stringify(cartProducts));

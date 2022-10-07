@@ -178,6 +178,9 @@ main {
   padding: 5px;
   font-weight: bolder;
 }
+.hidden {
+  display: none;
+}
 .error {
   color: red;
   text-align: center;
