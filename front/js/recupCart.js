@@ -203,6 +203,7 @@ if (storageArticles === null || storageArticles.length === 0) {
         const value = e.target.value;
         const regexVerifSpecial = new RegExp("[@!*$_]");
         let verifCitySpecial = value.match(regexVerifSpecial);
+        console.log(globalError);
         if (verifCitySpecial != null) {
             let err = "E010";
             error(err);
@@ -220,6 +221,7 @@ if (storageArticles === null || storageArticles.length === 0) {
             let emplacementNoError = document.getElementById("cityErrorMsg");
             emplacementNoError.innerHTML = emptyError;
             globalError.city = true;
+            console.log(globalError);
         }
         accesValidation(globalError);
         if (accesValidation(globalError) === true) {
@@ -234,7 +236,6 @@ if (storageArticles === null || storageArticles.length === 0) {
         if (verifAdressSpecial != null) {
             let err = "E019";
             error(err);
-            console.log(verifAdressSpecial);
             globalError.city = null;
             let buttonSubmitValid = document.getElementById("order");
             buttonSubmitValid.style.opacity = "0.3";
@@ -250,6 +251,8 @@ if (storageArticles === null || storageArticles.length === 0) {
                 document.getElementById("addressErrorMsg");
             emplacementNoError.innerHTML = emptyError;
             globalError.adress = true;
+            buttonSubmitValid.style.opacity = "1";
+            console.log(globalError);
         }
         accesValidation(globalError);
         if (accesValidation(globalError) === true) {
