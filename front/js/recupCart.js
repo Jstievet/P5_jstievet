@@ -10,8 +10,6 @@ let recupQuantity = [];
 let recupTotalPrice = [];
 let buttonSubmitValid = document.getElementById("order");
 
-// buttonSubmitValid.setAttribute("disabled", true);
-// buttonSubmitValid.style.opacity = "0.3";
 if (storageArticles === null || storageArticles.length === 0) {
     const err = "E016";
     error(err);
@@ -146,7 +144,6 @@ if (storageArticles === null || storageArticles.length === 0) {
     const cityInput = document.getElementById("city");
     const adressInput = document.getElementById("address");
     const mailInput = document.getElementById("email");
-    // buttonSubmitValid.setAttribute("disabled", true);
     buttonSubmitValid.style.opacity = "0.3";
     let globalError = {
         firstName: null,
@@ -164,7 +161,6 @@ if (storageArticles === null || storageArticles.length === 0) {
             error(err);
             globalError.firstName = null;
             let buttonSubmitValid = document.getElementById("order");
-            // buttonSubmitValid.setAttribute("disabled", true);
             buttonSubmitValid.style.opacity = "0.3";
         } else {
             let emptyError = "";
@@ -175,7 +171,6 @@ if (storageArticles === null || storageArticles.length === 0) {
         }
         accesValidation(globalError);
         if (accesValidation(globalError) === true) {
-            // buttonSubmitValid.setAttribute("disabled", false);
             buttonSubmitValid.style.opacity = "1";
         }
     });
@@ -189,7 +184,6 @@ if (storageArticles === null || storageArticles.length === 0) {
             error(err);
             globalError.lastName = null;
             let buttonSubmitValid = document.getElementById("order");
-            // buttonSubmitValid.setAttribute("disabled", true);
             buttonSubmitValid.style.opacity = "0.3";
         } else {
             let emptyError = "";
@@ -200,7 +194,6 @@ if (storageArticles === null || storageArticles.length === 0) {
         }
         accesValidation(globalError);
         if (accesValidation(globalError) === true) {
-            // buttonSubmitValid.setAttribute("disabled", false);
             buttonSubmitValid.style.opacity = "1";
         }
     });
@@ -211,21 +204,18 @@ if (storageArticles === null || storageArticles.length === 0) {
         const regexVerifSpecial = new RegExp(/[@&"()!_$*€£`+=;?#]+$/);
         let verifCIty = value.match(regexVerifNumber);
         let verifCitySpecial = value.match(regexVerifSpecial);
-        // verifInputChange(value);
-        // verifInputChange(value) === false
+
         if (verifCIty != null || verifCitySpecial != null) {
             let err = "E010";
             error(err);
             globalError.city = null;
             let buttonSubmitValid = document.getElementById("order");
-            // buttonSubmitValid.setAttribute("disabled", true);
             buttonSubmitValid.style.opacity = "0.3";
         } else if (value === "") {
             let err = "E014";
             error(err);
             globalError.city = null;
             let buttonSubmitValid = document.getElementById("order");
-            // buttonSubmitValid.setAttribute("disabled", true);
             buttonSubmitValid.style.opacity = "0.3";
         } else {
             let emptyError = "";
@@ -235,7 +225,6 @@ if (storageArticles === null || storageArticles.length === 0) {
         }
         accesValidation(globalError);
         if (accesValidation(globalError) === true) {
-            // buttonSubmitValid.setAttribute("disabled", false);
             buttonSubmitValid.style.opacity = "1";
         }
     });
@@ -244,13 +233,11 @@ if (storageArticles === null || storageArticles.length === 0) {
         const value = e.target.value;
         verifInputChange(value);
 
-        if (verifInputChange(value) === true || value === "") {
-            console.log(globalError.adress);
+        if (value === "") {
             let err = "E013";
             error(err);
             globalError.adress = null;
             let buttonSubmitValid = document.getElementById("order");
-            // buttonSubmitValid.setAttribute("disabled", true);
             buttonSubmitValid.style.opacity = "0.3";
         } else {
             let emptyError = "";
@@ -261,7 +248,6 @@ if (storageArticles === null || storageArticles.length === 0) {
         }
         accesValidation(globalError);
         if (accesValidation(globalError) === true) {
-            // buttonSubmitValid.setAttribute("disabled", false);
             buttonSubmitValid.style.opacity = "1";
         }
     })
@@ -275,7 +261,6 @@ if (storageArticles === null || storageArticles.length === 0) {
             error(err);
             globalError.mail = null;
             let buttonSubmitValid = document.getElementById("order");
-            // buttonSubmitValid.setAttribute("disabled", true);
             buttonSubmitValid.style.opacity = "0.3";
         }
         else if (value === "") {
@@ -291,6 +276,7 @@ if (storageArticles === null || storageArticles.length === 0) {
         }
         accesValidation(globalError);
         if (accesValidation(globalError) === true) {
+
             buttonSubmitValid.style.opacity = "1";
         }
     });
@@ -300,8 +286,7 @@ if (storageArticles === null || storageArticles.length === 0) {
 
     const buttonSubmit = document.getElementById("order");
 
-    buttonSubmit.addEventListener("click", function () {
-
+    buttonSubmit.addEventListener("click", function (e) {
         let idProducts = [];
         let firstName = document.getElementById("firstName").value;
         let lastName = document.getElementById("lastName").value;
@@ -310,13 +295,11 @@ if (storageArticles === null || storageArticles.length === 0) {
         let mail = document.getElementById("email").value;
         const localProducts = JSON.parse(localStorage.getItem("products"));
         let idProductForOrder = [];
-        console.log('globalError.firstName', globalError.firstName);
-        console.log('globalError.lastName', globalError.lastName);
-        console.log('globalError.city', globalError.city);
-        console.log('globalError.adress', globalError.adress);
-        console.log('globalError.mail', globalError.mail);
 
-        if (globalError.firstName && globalError.lastName && globalError.city && globalError.adress && globalError.mail && localProducts.length != 0) {
+        if (localProducts.length === 0) {
+            const err = "E016";
+            error(err);
+        } else if (globalError.firstName && globalError.lastName && globalError.city && globalError.adress && globalError.mail) {
             // Push Product ID in idProductForOrder
 
             localProducts.forEach((product) => {
@@ -355,9 +338,10 @@ if (storageArticles === null || storageArticles.length === 0) {
                     window.location.href = idPageConfirmation;
                 })
                 .catch(function (err) {
-                    //erreur
+                    e.preventDefault();
                 });
         } else {
+            e.preventDefault();
             const err = "E018";
             error(err);
         }
