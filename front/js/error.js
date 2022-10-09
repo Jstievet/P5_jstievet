@@ -81,6 +81,11 @@ function error(err) {
             let emplacementErrorForm = document.getElementById("ErrorMsg");
             emplacementErrorForm.innerText = errorFormValidation;
             break;
+        case 'E019':
+            const errorAdress = "Veuillez n'utiliser que des caractère de a-z A-Z ou 0-9";
+            let emplacementErrorAdress = document.getElementById("addressErrorMsg");
+            emplacementErrorAdress.innerText = errorAdress;
+            break;
         default:
 
 

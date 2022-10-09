@@ -152,6 +152,7 @@ if (storageArticles === null || storageArticles.length === 0) {
         adress: null,
         mail: null
     };
+    //ici on vérifie le prénom
     firstNameInput.addEventListener("change", function (e) {
         const value = e.target.value;
         verifInputChange(value);
@@ -174,7 +175,7 @@ if (storageArticles === null || storageArticles.length === 0) {
             buttonSubmitValid.style.opacity = "1";
         }
     });
-    //vérification au changement pour le prénom
+    //vérification au changement pour le nom
     lastNameInput.addEventListener("change", function (e) {
         const value = e.target.value;
         verifInputChange(value);
@@ -200,12 +201,9 @@ if (storageArticles === null || storageArticles.length === 0) {
     //vérification au changement pour la ville
     cityInput.addEventListener("change", function (e) {
         const value = e.target.value;
-        const regexVerifNumber = new RegExp("[0-9]");
-        const regexVerifSpecial = new RegExp(/[@&"()!_$*€£`+=;?#]+$/);
-        let verifCIty = value.match(regexVerifNumber);
+        const regexVerifSpecial = new RegExp("[@!*$_]");
         let verifCitySpecial = value.match(regexVerifSpecial);
-
-        if (verifCIty != null || verifCitySpecial != null) {
+        if (verifCitySpecial != null) {
             let err = "E010";
             error(err);
             globalError.city = null;
@@ -231,9 +229,16 @@ if (storageArticles === null || storageArticles.length === 0) {
     //verification adresse 
     adressInput.addEventListener("change", function (e) {
         const value = e.target.value;
-        verifInputChange(value);
-
-        if (value === "") {
+        const regexVerifSpecial = new RegExp("[@!*$]");
+        let verifAdressSpecial = value.match(regexVerifSpecial);
+        if (verifAdressSpecial != null) {
+            let err = "E019";
+            error(err);
+            console.log(verifAdressSpecial);
+            globalError.city = null;
+            let buttonSubmitValid = document.getElementById("order");
+            buttonSubmitValid.style.opacity = "0.3";
+        } else if (value === "") {
             let err = "E013";
             error(err);
             globalError.adress = null;
@@ -338,7 +343,7 @@ if (storageArticles === null || storageArticles.length === 0) {
                     window.location.href = idPageConfirmation;
                 })
                 .catch(function (err) {
-                    e.preventDefault();
+
                 });
         } else {
             e.preventDefault();
