@@ -76,6 +76,11 @@ function error(err) {
             let emplacementMailArticle = document.getElementById("emailErrorMsg");
             emplacementMailArticle.innerText = errorEmptyMail;
             break;
+        case 'E018':
+            const errorFormValidation = "Le formulaire n'est pas remplie correctement";
+            let emplacementErrorForm = document.getElementById("ErrorMsg");
+            emplacementErrorForm.innerText = errorFormValidation;
+            break;
         default:
 
 

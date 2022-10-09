@@ -15,7 +15,9 @@ function accesValidation(globalError) {
     if (
         globalError.firstName === true &&
         globalError.lastName === true &&
-        globalError.city === true
+        globalError.city === true &&
+        globalError.adress === true &&
+        globalError.mail === true
     ) {
         return true;
     } else {

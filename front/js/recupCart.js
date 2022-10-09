@@ -9,11 +9,14 @@ let articles = [];
 let recupQuantity = [];
 let recupTotalPrice = [];
 let buttonSubmitValid = document.getElementById("order");
-buttonSubmitValid.setAttribute("disabled", true);
-buttonSubmitValid.style.opacity = "0.3";
+
+// buttonSubmitValid.setAttribute("disabled", true);
+// buttonSubmitValid.style.opacity = "0.3";
 if (storageArticles === null || storageArticles.length === 0) {
     const err = "E016";
     error(err);
+    let hiddenCartPrice = document.getElementById("price_total");
+    hiddenCartPrice.setAttribute("hidden", true);
 } else {
     storageArticles.forEach((article, idx) => {
         const urlProducts = "http://localhost:3000/api/products/" + article.id;
@@ -42,7 +45,7 @@ if (storageArticles === null || storageArticles.length === 0) {
                 articleCartItem.querySelector(".cart__item__color").innerText =
                     article.color;
                 articleCartItem.querySelector(".cart__item__price").innerText =
-                    price;
+                    price + "€";
                 articleCartItem.querySelector(".itemQuantity").value =
                     article.quantity;
                 document
@@ -109,10 +112,10 @@ if (storageArticles === null || storageArticles.length === 0) {
                                     localStorage.removeItem("products");
                                     localStorage.setItem("products", JSON.stringify(cartProducts));
 
-                                    if (cartProducts.length == 0) {
+                                    if (cartProducts.length === 0) {
                                         const err = "E016";
                                         error(err);
-                                        let hiddenCartPrice = document.getElementsByClassName("cart__price");
+                                        let hiddenCartPrice = document.getElementById("price_total");
                                         hiddenCartPrice.setAttribute("hidden", true);
                                     }
                                 } else {
@@ -124,6 +127,7 @@ if (storageArticles === null || storageArticles.length === 0) {
                                 total();
                             }, 500);
                         }
+
                     });
                 }
                 //récuperer la taille du panier lacalsotrage puis l'index de l'occurence
@@ -142,6 +146,7 @@ if (storageArticles === null || storageArticles.length === 0) {
     const cityInput = document.getElementById("city");
     const adressInput = document.getElementById("address");
     const mailInput = document.getElementById("email");
+    // buttonSubmitValid.setAttribute("disabled", true);
     buttonSubmitValid.style.opacity = "0.3";
     let globalError = {
         firstName: null,
@@ -159,7 +164,7 @@ if (storageArticles === null || storageArticles.length === 0) {
             error(err);
             globalError.firstName = null;
             let buttonSubmitValid = document.getElementById("order");
-            buttonSubmitValid.setAttribute("disabled", true);
+            // buttonSubmitValid.setAttribute("disabled", true);
             buttonSubmitValid.style.opacity = "0.3";
         } else {
             let emptyError = "";
@@ -170,7 +175,7 @@ if (storageArticles === null || storageArticles.length === 0) {
         }
         accesValidation(globalError);
         if (accesValidation(globalError) === true) {
-            buttonSubmitValid.setAttribute("disabled", false);
+            // buttonSubmitValid.setAttribute("disabled", false);
             buttonSubmitValid.style.opacity = "1";
         }
     });
@@ -184,7 +189,7 @@ if (storageArticles === null || storageArticles.length === 0) {
             error(err);
             globalError.lastName = null;
             let buttonSubmitValid = document.getElementById("order");
-            buttonSubmitValid.setAttribute("disabled", true);
+            // buttonSubmitValid.setAttribute("disabled", true);
             buttonSubmitValid.style.opacity = "0.3";
         } else {
             let emptyError = "";
@@ -195,7 +200,7 @@ if (storageArticles === null || storageArticles.length === 0) {
         }
         accesValidation(globalError);
         if (accesValidation(globalError) === true) {
-            buttonSubmitValid.setAttribute("disabled", false);
+            // buttonSubmitValid.setAttribute("disabled", false);
             buttonSubmitValid.style.opacity = "1";
         }
     });
@@ -213,14 +218,14 @@ if (storageArticles === null || storageArticles.length === 0) {
             error(err);
             globalError.city = null;
             let buttonSubmitValid = document.getElementById("order");
-            buttonSubmitValid.setAttribute("disabled", true);
+            // buttonSubmitValid.setAttribute("disabled", true);
             buttonSubmitValid.style.opacity = "0.3";
         } else if (value === "") {
             let err = "E014";
             error(err);
             globalError.city = null;
             let buttonSubmitValid = document.getElementById("order");
-            buttonSubmitValid.setAttribute("disabled", true);
+            // buttonSubmitValid.setAttribute("disabled", true);
             buttonSubmitValid.style.opacity = "0.3";
         } else {
             let emptyError = "";
@@ -230,7 +235,7 @@ if (storageArticles === null || storageArticles.length === 0) {
         }
         accesValidation(globalError);
         if (accesValidation(globalError) === true) {
-            buttonSubmitValid.removeAttribute("disabled");
+            // buttonSubmitValid.setAttribute("disabled", false);
             buttonSubmitValid.style.opacity = "1";
         }
     });
@@ -240,11 +245,12 @@ if (storageArticles === null || storageArticles.length === 0) {
         verifInputChange(value);
 
         if (verifInputChange(value) === true || value === "") {
+            console.log(globalError.adress);
             let err = "E013";
             error(err);
             globalError.adress = null;
             let buttonSubmitValid = document.getElementById("order");
-            buttonSubmitValid.setAttribute("disabled", true);
+            // buttonSubmitValid.setAttribute("disabled", true);
             buttonSubmitValid.style.opacity = "0.3";
         } else {
             let emptyError = "";
@@ -255,7 +261,7 @@ if (storageArticles === null || storageArticles.length === 0) {
         }
         accesValidation(globalError);
         if (accesValidation(globalError) === true) {
-            buttonSubmitValid.setAttribute("disabled", false);
+            // buttonSubmitValid.setAttribute("disabled", false);
             buttonSubmitValid.style.opacity = "1";
         }
     })
@@ -269,7 +275,7 @@ if (storageArticles === null || storageArticles.length === 0) {
             error(err);
             globalError.mail = null;
             let buttonSubmitValid = document.getElementById("order");
-            buttonSubmitValid.setAttribute("disabled", true);
+            // buttonSubmitValid.setAttribute("disabled", true);
             buttonSubmitValid.style.opacity = "0.3";
         }
         else if (value === "") {
@@ -284,15 +290,18 @@ if (storageArticles === null || storageArticles.length === 0) {
             globalError.mail = true;
         }
         accesValidation(globalError);
-        if (accesValidation(globalError) === false) {
-            buttonSubmitValid.setAttribute("disabled", false);
+        if (accesValidation(globalError) === true) {
             buttonSubmitValid.style.opacity = "1";
         }
-    })
-    //on gére la validation de la commande en vérifiant les informations entre puis en intégrant au local storage un objet contact
+    });
+    // on gére la validation de la commande en vérifiant les informations entre puis en intégrant au local storage un objet contact
+
+
 
     const buttonSubmit = document.getElementById("order");
-    buttonSubmit.addEventListener("click", function (e) {
+
+    buttonSubmit.addEventListener("click", function () {
+
         let idProducts = [];
         let firstName = document.getElementById("firstName").value;
         let lastName = document.getElementById("lastName").value;
@@ -301,7 +310,13 @@ if (storageArticles === null || storageArticles.length === 0) {
         let mail = document.getElementById("email").value;
         const localProducts = JSON.parse(localStorage.getItem("products"));
         let idProductForOrder = [];
-        if (globalError.firstName && globalError.lastName && globalError.city && globalError.adress && globalError.mail) {
+        console.log('globalError.firstName', globalError.firstName);
+        console.log('globalError.lastName', globalError.lastName);
+        console.log('globalError.city', globalError.city);
+        console.log('globalError.adress', globalError.adress);
+        console.log('globalError.mail', globalError.mail);
+
+        if (globalError.firstName && globalError.lastName && globalError.city && globalError.adress && globalError.mail && localProducts.length != 0) {
             // Push Product ID in idProductForOrder
 
             localProducts.forEach((product) => {
@@ -342,6 +357,9 @@ if (storageArticles === null || storageArticles.length === 0) {
                 .catch(function (err) {
                     //erreur
                 });
+        } else {
+            const err = "E018";
+            error(err);
         }
     });
 }
