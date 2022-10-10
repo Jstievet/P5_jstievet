@@ -157,7 +157,7 @@ if (storageArticles === null || storageArticles.length === 0) {
         const value = e.target.value;
         verifInputChange(value);
 
-        if (verifInputChange(value) === false) {
+        if (verifInputChange(value) === false || value === "") {
             let err = "E008";
             error(err);
             globalError.firstName = null;
@@ -180,7 +180,7 @@ if (storageArticles === null || storageArticles.length === 0) {
         const value = e.target.value;
         verifInputChange(value);
 
-        if (verifInputChange(value) === false) {
+        if (verifInputChange(value) === false || value === "") {
             let err = "E009";
             error(err);
             globalError.lastName = null;
@@ -203,7 +203,7 @@ if (storageArticles === null || storageArticles.length === 0) {
         const value = e.target.value;
         const regexVerifSpecial = new RegExp("[@!*$_]");
         let verifCitySpecial = value.match(regexVerifSpecial);
-        console.log(globalError);
+
         if (verifCitySpecial != null) {
             let err = "E010";
             error(err);
@@ -221,7 +221,6 @@ if (storageArticles === null || storageArticles.length === 0) {
             let emplacementNoError = document.getElementById("cityErrorMsg");
             emplacementNoError.innerHTML = emptyError;
             globalError.city = true;
-            console.log(globalError);
         }
         accesValidation(globalError);
         if (accesValidation(globalError) === true) {
@@ -233,6 +232,7 @@ if (storageArticles === null || storageArticles.length === 0) {
         const value = e.target.value;
         const regexVerifSpecial = new RegExp("[@!*$]");
         let verifAdressSpecial = value.match(regexVerifSpecial);
+
         if (verifAdressSpecial != null) {
             let err = "E019";
             error(err);
@@ -246,13 +246,14 @@ if (storageArticles === null || storageArticles.length === 0) {
             let buttonSubmitValid = document.getElementById("order");
             buttonSubmitValid.style.opacity = "0.3";
         } else {
+
             let emptyError = "";
             let emplacementNoError =
                 document.getElementById("addressErrorMsg");
             emplacementNoError.innerHTML = emptyError;
             globalError.adress = true;
             buttonSubmitValid.style.opacity = "1";
-            console.log(globalError);
+
         }
         accesValidation(globalError);
         if (accesValidation(globalError) === true) {
@@ -349,7 +350,7 @@ if (storageArticles === null || storageArticles.length === 0) {
 
                 });
         } else {
-            e.preventDefault();
+            // e.preventDefault();
             const err = "E018";
             error(err);
         }
