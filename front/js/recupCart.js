@@ -156,8 +156,10 @@ if (storageArticles === null || storageArticles.length === 0) {
     firstNameInput.addEventListener("change", function (e) {
         const value = e.target.value;
         verifInputChange(value);
-
-        if (verifInputChange(value) === false || value === "") {
+        if (value === "") {
+            let err = "E011"
+            error(err);
+        } else if (verifInputChange(value) === false) {
             let err = "E008";
             error(err);
             globalError.firstName = null;
@@ -179,8 +181,10 @@ if (storageArticles === null || storageArticles.length === 0) {
     lastNameInput.addEventListener("change", function (e) {
         const value = e.target.value;
         verifInputChange(value);
-
-        if (verifInputChange(value) === false || value === "") {
+        if (value === "") {
+            let err = "E012"
+            error(err);
+        } else if (verifInputChange(value) === false) {
             let err = "E009";
             error(err);
             globalError.lastName = null;
@@ -232,8 +236,10 @@ if (storageArticles === null || storageArticles.length === 0) {
         const value = e.target.value;
         const regexVerifSpecial = new RegExp("[@!*$]");
         let verifAdressSpecial = value.match(regexVerifSpecial);
-
-        if (verifAdressSpecial != null) {
+        if (value === "") {
+            let err = "E013"
+            error(err);
+        } else if (verifAdressSpecial != null) {
             let err = "E019";
             error(err);
             globalError.city = null;
@@ -265,7 +271,10 @@ if (storageArticles === null || storageArticles.length === 0) {
         const value = e.target.value;
         const regexVerifSpecial = new RegExp(/[@_]/);
         let verifMailSpecial = value.match(regexVerifSpecial);
-        if (verifMailSpecial === null) {
+        if (value === "") {
+            let err = "E015"
+            error(err);
+        } else if (verifMailSpecial === null) {
             let err = "E017";
             error(err);
             globalError.mail = null;

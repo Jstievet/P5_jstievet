@@ -55,14 +55,22 @@ addToCart.addEventListener('click', function () {
     let quantityProduct = parseInt(document.getElementById('quantity').value);
     let emplacementError = document.getElementById('ErrorMsg');
     let cart = JSON.parse(localStorage.getItem('products'))
-
+    let emplacementMessageProductPanier = document.getElementById("MessageValidation");
     //vérification changement après premiere achats
 
     if (colorProduct.length === 0) {
+        if (emplacementMessageProductPanier.value = ! null) {
+            let videError = "";
+            emplacementMessageProductPanier.innerText = videError;
+        };
         const erreur = 'E003';
         error(erreur);
     } else {
         if (verifQuantity(quantityProduct, idProductsSelection) === true) {
+            if (emplacementMessageProductPanier.value = ! null) {
+                let videError = "";
+                emplacementMessageProductPanier.innerText = videError;
+            };
             const erreur = 'E002';
             error(erreur);
         }
@@ -71,7 +79,6 @@ addToCart.addEventListener('click', function () {
             let nameProductValue = nameProduct.textContent;
             emplacementError.innerText = "";
             let messageValidation = `Votre article ${nameProductValue} de couleur ${colorProduct} à été ajouté dans votre panier`;
-            let emplacementMessageProductPanier = document.getElementById("MessageValidation");
             emplacementMessageProductPanier.innerText = messageValidation;
             if (cart?.find(item => item.id === idProductsSelection && item.color === colorProduct && quantityProduct != 0)) {
                 cart = cart.map(item => {
